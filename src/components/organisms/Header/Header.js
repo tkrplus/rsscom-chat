@@ -23,7 +23,7 @@ const Header = (props) => {
     classes
   } = props
   return (
-    <AppBar position="static" className={classes.root}>
+    <AppBar positionFixed className={classes.root}>
       <Toolbar>
         <Typography variant="h6" color="inherit" className={classes.grow}>
             LIBERTAS

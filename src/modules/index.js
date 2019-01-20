@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux'
-import Ticket from './Ticket'
-import TicketTool from './TicketTool'
+import Thread from './Thread'
 
 export default combineReducers({
-  Ticket,
-  TicketTool
+  Thread
 })

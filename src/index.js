@@ -6,11 +6,10 @@ import {
 import { Provider } from 'react-redux'
 import GlobalStyle from '~/src/const/GlobalStyle'
 import '~/src/utils/FirebaseUtil'
-import * as serviceWorker from './serviceWorker'
 import theme from '~/src/const/Theme'
 import store from './store'
 
-import Thread from '~/src/components/pages/Thread'
+import Thread from '~/src/components/pages/_Index/Thread'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -20,5 +19,3 @@ ReactDOM.render(
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root'))
-
-serviceWorker.unregister()

@@ -5,7 +5,7 @@ import TIME from '~/src/utils/TIME'
 const ReplyRecord = Record({
   replyId: undefined,
   threadId: undefined,
-  message: undefined,
+  text: undefined,
   createdAt: undefined
 })
 

@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
+import Divider from '@material-ui/core/Divider'
 
 const styles = theme => ({
   title: {
@@ -20,16 +21,18 @@ const ThreadForm = (props) => {
     classes
   } = props
   return (
-    <Wrapper>
+    <div>
+      <Divider/>
       <Table>
         <tbody>
           <tr>
             <td>
               <TextField
-                name='title'
-                label='title'
+                multiline
+                name='text'
+                label='text'
                 variant='outlined'
-                className={classes.title}
+                className={classes.text}
               />
             </td>
             <PostColumn>
@@ -38,21 +41,9 @@ const ThreadForm = (props) => {
               </Button>
             </PostColumn>
           </tr>
-          <tr>
-            <td>
-              <TextField
-                multiline
-                name='text'
-                label='text'
-                rows='2'
-                variant='outlined'
-                className={classes.text}
-              />
-            </td>
-          </tr>
         </tbody>
       </Table>
-    </Wrapper>
+    </div>
   )
 }
 
@@ -61,10 +52,8 @@ const Wrapper = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: #FFFFFF;
   border-top: solid 1px #90a4ae;
   padding: 12px;
-  z-index: 2;
 `
 const Table = styled.table`
   width: 100%;
