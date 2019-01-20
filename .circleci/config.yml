@@ -1,0 +1,87 @@
+defaults: &defaults
+  docker:
+    - image: circleci/node:8
+  working_directory: ~/repo
+
+version: 2
+jobs:
+  dependency:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run:
+          name: 'Fix Dependencies'
+          command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: 'Testing'
+          command: npm test
+
+  lint:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: 'Testing'
+          command: npm run lint
+
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: 'Building'
+          command: npm run build
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: 'Deploy to Hosting'
+          command: npm run deploy:ci -- --project "$FIREBASE_PROJECT" --token "$FIREBASE_TOKEN"
+
+workflows:
+  version: 2
+  test_build_deploy:
+    jobs:
+      - dependency
+      - test:
+          requires:
+            - dependency
+      - lint:
+          requires:
+            - dependency
+      - build:
+          requires:
+            - dependency
+            - test
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
