@@ -7,6 +7,9 @@ import Icon from '@material-ui/core/Icon'
 import Divider from '@material-ui/core/Divider'
 
 const styles = theme => ({
+  table: {
+    marginTop: theme.spacing.unit
+  },
   title: {
     width: '100%',
     marginBottom: '8px'
@@ -16,44 +19,74 @@ const styles = theme => ({
   }
 })
 
-const ThreadForm = (props) => {
-  const {
-    classes
-  } = props
-  return (
-    <div>
-      <Divider/>
-      <Table>
-        <tbody>
-          <tr>
-            <td>
-              <TextField
-                multiline
-                name='text'
-                label='text'
-                variant='outlined'
-                className={classes.text}
-              />
-            </td>
-            <PostColumn>
-              <Button variant="contained" color="primary" className={classes.button}>
-              Post
-              </Button>
-            </PostColumn>
-          </tr>
-        </tbody>
-      </Table>
-    </div>
-  )
+class ReplyForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      text: ''
+    }
+  }
+
+  render() {
+    const {
+      classes,
+      onSubmit
+    } = this.props
+    const {
+      text
+    } = this.state
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      const {
+        text
+      } = this.state
+      onSubmit(text)
+      this.setState({
+        text: ''
+      })
+    }
+
+    return (
+      <Form
+        onSubmit={e => handleSubmit(e)}
+      >
+        <Divider/>
+        <Table className={classes.table}>
+          <tbody>
+            <tr>
+              <td>
+                <TextField
+                  multiline
+                  name='text'
+                  label='text'
+                  variant='outlined'
+                  value={text}
+                  className={classes.text}
+                  onChange={e => {
+                    this.setState({ text: e.target.value })
+                  }}
+                />
+              </td>
+              <PostColumn>
+                <Button
+                  type='submit'
+                  color='primary'
+                  variant='contained'
+                  className={classes.button}
+                >
+                  Post
+                </Button>
+              </PostColumn>
+            </tr>
+          </tbody>
+        </Table>
+      </Form>
+    )
+  }
 }
 
-const Wrapper = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-top: solid 1px #90a4ae;
-  padding: 12px;
+const Form = styled.form`
 `
 const Table = styled.table`
   width: 100%;
@@ -63,4 +96,4 @@ const PostColumn = styled.td`
   width: 70px;
 `
 
-export default withStyles(styles)(ThreadForm)
+export default withStyles(styles)(ReplyForm)

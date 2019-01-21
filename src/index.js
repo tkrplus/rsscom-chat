@@ -9,7 +9,7 @@ import '~/src/utils/FirebaseUtil'
 import theme from '~/src/const/Theme'
 import store from './store'
 
-import Thread from '~/src/components/pages/_Index/Thread'
+import Thread from '~/src/components/pages/_Index'
 
 ReactDOM.render(
   <Provider store={store}>

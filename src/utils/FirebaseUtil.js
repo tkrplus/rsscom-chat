@@ -10,3 +10,22 @@ const config = {
 }
 
 firebase.initializeApp(config)
+const firestore = firebase.firestore()
+
+const list = (collection) => {
+  return firestore
+    .collection(collection)
+    .get()
+}
+
+const add = (collection, id, data) => {
+  return firestore
+    .collection(collection)
+    .doc(id)
+    .set(data)
+}
+
+export default {
+  list,
+  add
+}

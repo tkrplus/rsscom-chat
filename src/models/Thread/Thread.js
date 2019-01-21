@@ -10,4 +10,21 @@ const ThreadRecord = Record({
 })
 
 export default class Thread extends ThreadRecord {
+  static create(title, text) {
+    return new Thread({
+      threadId: UUID.generate(),
+      createdAt: TIME.now(),
+      title: title,
+      text: text
+    })
+  }
+
+  buildFirestoreDoc() {
+    return {
+      threadId: this.threadId,
+      title: this.title,
+      text: this.text,
+      createdAt: this.createdAt.valueOf()
+    }
+  }
 }

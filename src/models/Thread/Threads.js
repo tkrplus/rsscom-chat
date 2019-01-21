@@ -2,7 +2,7 @@ import { Record, List } from 'immutable'
 import Thread from './Thread'
 
 const ThreadsRecord = Record({
-  Threads: List()
+  threads: List()
 })
 
 class Threads extends ThreadsRecord {
@@ -10,12 +10,12 @@ class Threads extends ThreadsRecord {
     super()
     const list = List(threads)
       .map(thread => new Thread(thread))
-      .sort((a, b) => a.createdAt - b.createdAt)
-    return this.set('Threads', list)
+      .sort((a, b) => b.createdAt - a.createdAt)
+    return this.set('threads', list)
   }
 
   addThread(thread) {
-    return this.set('Threads', this.Threads.push(thread))
+    return this.set('threads', this.threads.unshift(thread))
   }
 }
 

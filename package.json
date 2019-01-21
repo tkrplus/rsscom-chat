@@ -27,7 +27,7 @@
     "lint": "eslint --fix src/**/*.js",
     "lint:ci": "eslint src/**/*.js",
     "test": "jest --coverage",
-    "deploy": "npm run build && gh-pages -d dist",
+    "deploy": "npm run build && firebase deploy",
     "deploy:ci": "firebase deploy --only hosting"
   },
   "devDependencies": {

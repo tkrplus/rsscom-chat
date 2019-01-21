@@ -2,7 +2,7 @@ import { Record, List } from 'immutable'
 import Reply from './Reply'
 
 const RepliesRecord = Record({
-  Replies: List()
+  replies: List()
 })
 
 class Replies extends RepliesRecord {
@@ -11,11 +11,11 @@ class Replies extends RepliesRecord {
     const list = List(replies)
       .map(reply => new Reply(reply))
       .sort((a, b) => a.createdAt - b.createdAt)
-    return this.set('Replies', list)
+    return this.set('replies', list)
   }
 
   addReply(Reply) {
-    return this.set('Replies', this.Replies.push(Reply))
+    return this.set('replies', this.replies.push(Reply))
   }
 }
 

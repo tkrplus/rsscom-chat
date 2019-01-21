@@ -3,15 +3,19 @@ import styled from 'styled-components'
 import Thread from './Thread'
 
 export default (props) => {
+  const {
+    threads
+  } = props
   return (
     <Wrapper>
-      <Thread/>
-      <Thread/>
-      <Thread/>
-      <Thread/>
-      <Thread/>
-      <Thread/>
-      <Thread/>
+      {
+        threads.map(thread =>
+          <Thread
+            key={thread.threadId}
+            thread={thread}
+          />
+        )
+      }
     </Wrapper>
   )
 }

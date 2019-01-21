@@ -8,26 +8,47 @@ import Typography from '@material-ui/core/Typography'
 const styles = theme => ({
   paper: {
     ...theme.mixins.gutters(),
+    padding: theme.spacing.unit * 2,
     margin: theme.spacing.unit,
     marginBottom: theme.spacing.unit * 2
+  },
+  text: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
   }
 })
 
 const Thread = (props) => {
   const {
-    classes
+    classes,
+    thread,
+    replies
   } = props
   return (
     <Paper className={classes.paper}>
-      <Typography variant="h6" component="h2">
-          Title Title Title Title Title Title Title
+      <Typography
+        variant='h6'
+        component='h2'
+      >
+        { thread.title }
       </Typography>
-      <Typography component="p">
-          Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+      <Typography
+        component='p'
+        className={classes.text}
+      >
+        { thread.text }
       </Typography>
-      <Reply/>
-      <Reply/>
-      <ReplyForm/>
+      {
+        replies.map(reply =>
+          <Reply
+            key={reply.replyId}
+            reply={reply}
+          />
+        )
+      }
+      <ReplyForm
+        thread={thread}
+      />
     </Paper>
   )
 }
