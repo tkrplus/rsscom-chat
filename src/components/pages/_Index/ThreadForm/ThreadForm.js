@@ -81,6 +81,7 @@ class ThreadForm extends React.Component {
                   color='primary'
                   variant='contained'
                   className={classes.button}
+                  disabled={!text || !title || !text.length || !title.length}
                 >
                   Post
                 </Button>

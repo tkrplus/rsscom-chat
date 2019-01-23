@@ -4,6 +4,7 @@ import ReplyForm from './ReplyForm'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import Text from '~/src/components/organisms/Text'
 
 const styles = theme => ({
   paper: {
@@ -11,10 +12,6 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     margin: theme.spacing.unit,
     marginBottom: theme.spacing.unit * 2
-  },
-  text: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit
   }
 })
 
@@ -24,6 +21,7 @@ const Thread = (props) => {
     thread,
     replies
   } = props
+
   return (
     <Paper className={classes.paper}>
       <Typography
@@ -32,12 +30,7 @@ const Thread = (props) => {
       >
         { thread.title }
       </Typography>
-      <Typography
-        component='p'
-        className={classes.text}
-      >
-        { thread.text }
-      </Typography>
+      <Text text={thread.text}/>
       {
         replies.map(reply =>
           <Reply

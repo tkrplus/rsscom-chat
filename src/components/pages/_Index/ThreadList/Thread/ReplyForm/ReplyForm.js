@@ -23,7 +23,7 @@ class ReplyForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      text: ''
+      text: null
     }
   }
 
@@ -43,7 +43,7 @@ class ReplyForm extends React.Component {
       } = this.state
       onSubmit(text)
       this.setState({
-        text: ''
+        text: null
       })
     }
 
@@ -73,6 +73,7 @@ class ReplyForm extends React.Component {
                   type='submit'
                   color='primary'
                   variant='contained'
+                  disabled={!text || !text.length}
                   className={classes.button}
                 >
                   Post
