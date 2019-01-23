@@ -7,11 +7,11 @@ import Icon from '@material-ui/core/Icon'
 
 const styles = theme => ({
   title: {
-    width: '100%',
     marginBottom: '8px'
   },
-  text: {
-    width: '100%'
+  button: {
+    padding: '8px',
+    minWidth: '50px'
   }
 })
 
@@ -52,7 +52,8 @@ class ThreadForm extends React.Component {
           <tbody>
             <tr>
               <td>
-                <TextField
+                <StyledTextField
+                  fullWidth
                   name='title'
                   label='title'
                   value={title}
@@ -63,16 +64,16 @@ class ThreadForm extends React.Component {
                   }}
                 />
                 <br/>
-                <TextField
+                <StyledTextAreaField
                   multiline
-                  name='text'
+                  rowsMax={5}
+                  fullWidth
                   label='text'
                   value={text}
                   variant='outlined'
                   onChange={e => {
                     this.setState({ text: e.target.value })
                   }}
-                  className={classes.text}
                 />
               </td>
               <PostColumn>
@@ -83,7 +84,7 @@ class ThreadForm extends React.Component {
                   className={classes.button}
                   disabled={!text || !title || !text.length || !title.length}
                 >
-                  Post
+                  送信
                 </Button>
               </PostColumn>
             </tr>
@@ -101,15 +102,35 @@ const Form = styled.form`
   right: 0;
   background: #FFFFFF;
   border-top: solid 1px #90a4ae;
-  padding: 12px;
+  padding: 6px;
   z-index: 2;
 `
+
+const StyledTextField = styled(TextField)`
+  margin-bottom: 8px;
+  input {
+    padding: 9px;
+  }
+  > label {
+    transform: translate(9px,12px) scale(1);
+  }
+`
+
+const StyledTextAreaField = styled(TextField)`
+  > div {
+    padding: 9px;
+  }
+  > label {
+    transform: translate(9px,12px) scale(1);
+  }
+`
+
 const Table = styled.table`
   width: 100%;
 `
 
 const PostColumn = styled.td`
-  width: 70px;
+  width: 50px;
   vertical-align: bottom;
 `
 

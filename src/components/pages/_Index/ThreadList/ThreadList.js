@@ -23,4 +23,5 @@ export default (props) => {
 const Wrapper = styled.div`
   padding-top: 74px;
   padding-bottom: 200px;
+  background: #eceff1;
 `

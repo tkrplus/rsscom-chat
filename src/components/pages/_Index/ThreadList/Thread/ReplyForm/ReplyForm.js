@@ -16,6 +16,10 @@ const styles = theme => ({
   },
   text: {
     width: '100%'
+  },
+  button: {
+    padding: '8px',
+    minWidth: '50px'
   }
 })
 
@@ -56,7 +60,7 @@ class ReplyForm extends React.Component {
           <tbody>
             <tr>
               <td>
-                <TextField
+                <StyledTextAreaField
                   multiline
                   name='text'
                   label='text'
@@ -76,7 +80,7 @@ class ReplyForm extends React.Component {
                   disabled={!text || !text.length}
                   className={classes.button}
                 >
-                  Post
+                  送信
                 </Button>
               </PostColumn>
             </tr>
@@ -94,7 +98,16 @@ const Table = styled.table`
 `
 
 const PostColumn = styled.td`
-  width: 70px;
+  width: 50px;
+`
+
+const StyledTextAreaField = styled(TextField)`
+  > div {
+    padding: 9px;
+  }
+  > label {
+    transform: translate(9px,12px) scale(1);
+  }
 `
 
 export default withStyles(styles)(ReplyForm)
