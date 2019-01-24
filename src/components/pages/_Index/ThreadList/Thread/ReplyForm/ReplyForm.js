@@ -27,7 +27,7 @@ class ReplyForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      text: null
+      text: ''
     }
   }
 
@@ -47,7 +47,7 @@ class ReplyForm extends React.Component {
       } = this.state
       onSubmit(text)
       this.setState({
-        text: null
+        text: ''
       })
     }
 
