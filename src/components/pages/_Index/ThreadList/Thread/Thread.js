@@ -4,6 +4,7 @@ import ReplyForm from './ReplyForm'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import LinearProgress from '@material-ui/core/LinearProgress'
 import Text from '~/src/components/organisms/Text'
 
 const styles = theme => ({
@@ -19,7 +20,8 @@ const Thread = (props) => {
   const {
     classes,
     thread,
-    replies
+    replies,
+    isRepliesFetched
   } = props
 
   return (
@@ -31,6 +33,10 @@ const Thread = (props) => {
         { thread.title }
       </Typography>
       <Text text={thread.text}/>
+      {
+        !isRepliesFetched &&
+          <LinearProgress />
+      }
       {
         replies.map(reply =>
           <Reply

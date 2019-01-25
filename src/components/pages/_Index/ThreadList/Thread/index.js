@@ -3,7 +3,8 @@ import Thread from './Thread'
 
 const mapStateToProps = (state, ownProps) => {
   const {
-    repliesMap
+    repliesMap,
+    isRepliesFetched
   } = state.Thread
   const {
     thread
@@ -12,7 +13,8 @@ const mapStateToProps = (state, ownProps) => {
   const replies = repliesMap.repliesMap.get(thread.threadId)
 
   return {
-    replies: replies ? replies.replies : []
+    replies: replies ? replies.replies : [],
+    isRepliesFetched
   }
 }
 
