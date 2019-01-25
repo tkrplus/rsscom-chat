@@ -12,8 +12,10 @@ const FETCH_REPLIES_FAILED = '/Rss/Thread/FETCH_REPLIES_FAILED'
 const FETCH_REPLIES_RETRY = '/Rss/Thread/FETCH_REPLIES_RETRY'
 const POST_THREAD_SUCCESS = '/Rss/Thread/POST_THREAD_SUCCESS'
 const POST_REPLY_SUCCESS = '/Rss/Thread/POST_REPLY_SUCCESS'
+const CLEAR_FETCH_ERROR = 'Rss/Thread/CLEAR_FETCH_ERROR'
 
 const maxRetryCount = 3
+const retryInterval = 1000
 
 export const initialize = () => {
   return dispatch => {
@@ -44,16 +46,19 @@ const fetchThreadsRetry = (payload) => {
       retryCountForThreads
     } = getState().Thread
     if (retryCountForThreads < maxRetryCount) {
-      dispatch({
-        type: FETCH_THREADS_RETRY,
-        retryCountForThreads: retryCountForThreads + 1
-      })
-      dispatch(fetchThreads())
+      setTimeout(() => {
+        dispatch(fetchThreads())
+        dispatch({
+          type: FETCH_THREADS_RETRY,
+          retryCountForThreads: retryCountForThreads + 1
+        })
+      }, retryInterval)
       return
     }
-    return {
+    console.error(payload)
+    return dispatch({
       type: FETCH_THREADS_FAILED
-    }
+    })
   }
 }
 
@@ -79,16 +84,19 @@ const fetchRepliesRetry = (payload) => {
       retryCountForReplies
     } = getState().Thread
     if (retryCountForReplies < maxRetryCount) {
-      dispatch({
-        type: FETCH_REPLIES_RETRY,
-        retryCountForReplies: retryCountForReplies + 1
-      })
-      dispatch(fetchReplies())
+      setTimeout(() => {
+        dispatch(fetchReplies())
+        dispatch({
+          type: FETCH_REPLIES_RETRY,
+          retryCountForReplies: retryCountForReplies + 1
+        })
+      }, retryInterval)
       return
     }
-    return {
+    console.error(payload)
+    return dispatch({
       type: FETCH_REPLIES_FAILED
-    }
+    })
   }
 }
 
@@ -122,12 +130,19 @@ const postReplySuccess = (reply) => {
   }
 }
 
+export const clearFetchError = () => {
+  return {
+    type: CLEAR_FETCH_ERROR
+  }
+}
+
 const initialState = {
   threads: new Threads(),
   repliesMap: new RepliesMap(),
   isRepliesFetched: false,
   retryCountForThreads: 0,
-  retryCountForReplies: 0
+  retryCountForReplies: 0,
+  hasFetchError: false
 }
 
 export default (state = initialState, action) => {
@@ -141,7 +156,8 @@ export default (state = initialState, action) => {
     case FETCH_THREADS_FAILED:
       return {
         ...state,
-        retryCountForThreads: 0
+        retryCountForThreads: 0,
+        hasFetchError: true
       }
     case FETCH_THREADS_RETRY:
       return {
@@ -159,7 +175,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         retryCountForReplies: 0,
-        isRepliesFetched: false
+        isRepliesFetched: false,
+        hasFetchError: true
       }
     case FETCH_REPLIES_RETRY:
       return {
@@ -175,6 +192,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         repliesMap: state.repliesMap.addReply(action.reply)
+      }
+    case CLEAR_FETCH_ERROR:
+      return {
+        ...state,
+        hasFetchError: false
       }
     default:
       return state

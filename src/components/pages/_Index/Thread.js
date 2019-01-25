@@ -2,6 +2,7 @@ import React from 'react'
 import DefaultTemplate from '~/src/components/templates/DefualtTemplate'
 import ThreadList from './ThreadList'
 import ThreadForm from './ThreadForm'
+import ErrorDialog from '~/src/components/organisms/ErrorDialog'
 
 class Thread extends React.Component {
   componentDidMount() {
@@ -9,10 +10,19 @@ class Thread extends React.Component {
   }
 
   render() {
+    const {
+      hasFetchError,
+      clearFetchError
+    } = this.props
     return (
       <DefaultTemplate>
         <ThreadList />
         <ThreadForm />
+        <ErrorDialog
+          open={hasFetchError}
+          title='通信エラー'
+          onClose={clearFetchError}
+        />
       </DefaultTemplate>
     )
   }
