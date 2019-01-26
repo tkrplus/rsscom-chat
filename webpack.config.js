@@ -1,7 +1,10 @@
 const path = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const webpack = require('webpack')
+
+const PRODUCTION = process.env.NODE_ENV === 'production'
 
 module.exports = {
   mode: 'development',
@@ -10,6 +13,9 @@ module.exports = {
     alias: {
       '~/src': path.resolve(__dirname, 'src/')
     }
+  },
+  optimization: {
+    minimize: PRODUCTION
   },
   entry: {
     app: './index.js'
@@ -40,6 +46,12 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
+    }),
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ja/),
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
@@ -48,6 +60,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: '404.html',
       template: path.resolve(__dirname, 'public/404.html')
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false
     })
   ]
 }

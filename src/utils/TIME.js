@@ -1,6 +1,4 @@
-import moment from 'moment-timezone'
-
-moment.tz.setDefault('Asia/Tokyo')
+import moment from 'moment'
 
 export const now = () => {
   return moment()
