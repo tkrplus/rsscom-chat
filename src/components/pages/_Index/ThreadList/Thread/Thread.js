@@ -21,8 +21,14 @@ const Thread = (props) => {
     classes,
     thread,
     replies,
-    isRepliesFetched
+    isRepliesFetched,
+    isSearchMode,
+    hasSearchText
   } = props
+
+  if (isSearchMode && !hasSearchText) {
+    return null
+  }
 
   return (
     <Paper className={classes.paper}>

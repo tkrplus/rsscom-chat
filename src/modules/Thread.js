@@ -13,6 +13,7 @@ const FETCH_REPLIES_RETRY = '/Rss/Thread/FETCH_REPLIES_RETRY'
 const POST_THREAD_SUCCESS = '/Rss/Thread/POST_THREAD_SUCCESS'
 const POST_REPLY_SUCCESS = '/Rss/Thread/POST_REPLY_SUCCESS'
 const CLEAR_FETCH_ERROR = 'Rss/Thread/CLEAR_FETCH_ERROR'
+const SEARCH = 'Rss/Thread/SEARCH'
 
 const maxRetryCount = 3
 const retryInterval = 1000
@@ -136,13 +137,21 @@ export const clearFetchError = () => {
   }
 }
 
+export const search = (searchText) => {
+  return {
+    type: SEARCH,
+    searchText
+  }
+}
+
 const initialState = {
   threads: new Threads(),
   repliesMap: new RepliesMap(),
   isRepliesFetched: false,
   retryCountForThreads: 0,
   retryCountForReplies: 0,
-  hasFetchError: false
+  hasFetchError: false,
+  searchText: undefined
 }
 
 export default (state = initialState, action) => {
@@ -197,6 +206,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         hasFetchError: false
+      }
+    case SEARCH:
+      return {
+        ...state,
+        searchText: action.searchText || undefined
       }
     default:
       return state
